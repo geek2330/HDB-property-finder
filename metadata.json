@@ -1,0 +1,6 @@
+{
+  "name": "HDB Nest — Singapore HDB Recommender & Property Search",
+  "description": "Smart recommendation platform for available Singapore HDB resale flats filtered by location, price, floor area, and amenities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
