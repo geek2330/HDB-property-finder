@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bookmark, Scale, SlidersHorizontal, Sparkles } from 'lucide-react';
+import { Bookmark, Scale, SlidersHorizontal, Sparkles, Activity } from 'lucide-react';
 
 interface HeaderProps {
   activeTab: 'explore' | 'map' | 'grants' | 'saved';
@@ -10,6 +10,7 @@ interface HeaderProps {
   onOpenQuiz: () => void;
   onToggleFilters: () => void;
   hasActiveFilters: boolean;
+  onOpenHealthCheck?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -21,6 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenQuiz,
   onToggleFilters,
   hasActiveFilters,
+  onOpenHealthCheck,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
@@ -104,6 +106,18 @@ export const Header: React.FC<HeaderProps> = ({
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span>Filters</span>
           </button>
+
+          {/* API Health Check Trigger */}
+          {onOpenHealthCheck && (
+            <button
+              onClick={onOpenHealthCheck}
+              title="Inspect backend and SLA OneMap API health"
+              className="p-2 text-slate-500 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
+            >
+              <Activity className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="sr-only">API Health Check</span>
+            </button>
+          )}
 
           {/* Smart Match Quiz Button */}
           <button

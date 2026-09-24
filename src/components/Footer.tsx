@@ -3,9 +3,10 @@ import { TOWN_BENCHMARKS } from '../data/hdbProperties';
 
 interface FooterProps {
   onSelectTown: (town: string) => void;
+  onOpenHealthCheck?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectTown }) => {
+export const Footer: React.FC<FooterProps> = ({ onSelectTown, onOpenHealthCheck }) => {
   return (
     <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -88,6 +89,15 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTown }) => {
             © 2026 HDB Nest Singapore. All property data modeled after official resale transaction statistics.
           </div>
           <div className="flex items-center gap-4">
+            {onOpenHealthCheck && (
+              <button
+                onClick={onOpenHealthCheck}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>API Health Check</span>
+              </button>
+            )}
             <span>Privacy Policy</span>
             <span>Terms of Service</span>
             <span>Housing Advisory</span>

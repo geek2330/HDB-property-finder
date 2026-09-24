@@ -17,6 +17,7 @@ import { ComparisonModal } from './components/ComparisonModal';
 import { SingaporeTownMap } from './components/SingaporeTownMap';
 import { GrantCalculatorView } from './components/GrantCalculatorModal';
 import { RecommendationQuizModal } from './components/RecommendationQuizModal';
+import { ApiHealthModal } from './components/ApiHealthModal';
 import { Footer } from './components/Footer';
 import { HDB_PROPERTIES } from './data/hdbProperties';
 import { PropertyFilters, ScoredProperty, SingaporeRegion } from './types/property';
@@ -65,6 +66,7 @@ export default function App() {
   const [selectedProperty, setSelectedProperty] = useState<ScoredProperty | null>(null);
   const [isQuizOpen, setIsQuizOpen] = useState<boolean>(false);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState<boolean>(false);
+  const [isHealthCheckOpen, setIsHealthCheckOpen] = useState<boolean>(false);
 
   useEffect(() => {
     try {
@@ -149,6 +151,7 @@ export default function App() {
         onOpenQuiz={() => setIsQuizOpen(true)}
         onToggleFilters={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
         hasActiveFilters={hasActiveFilters}
+        onOpenHealthCheck={() => setIsHealthCheckOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -544,12 +547,19 @@ export default function App() {
         }}
       />
 
+      {/* API & Services Health Check Modal */}
+      <ApiHealthModal
+        isOpen={isHealthCheckOpen}
+        onClose={() => setIsHealthCheckOpen(false)}
+      />
+
       {/* Footer */}
       <Footer
         onSelectTown={(town) => {
           handleUpdateFilters({ towns: [town] });
           setActiveTab('explore');
         }}
+        onOpenHealthCheck={() => setIsHealthCheckOpen(true)}
       />
     </div>
   );
