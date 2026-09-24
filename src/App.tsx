@@ -410,6 +410,10 @@ export default function App() {
                 handleUpdateFilters({ regions: [region], towns: [] });
                 setActiveTab('explore');
               }}
+              onSelectProperty={(p) => {
+                const found = scoredProperties.find(item => item.id === p.id) || (p as ScoredProperty);
+                setSelectedProperty(found);
+              }}
             />
           </div>
         )}

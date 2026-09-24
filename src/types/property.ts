@@ -49,6 +49,8 @@ export interface HDBProperty {
   noWestSun: boolean;
   renovationCondition: RenovationCondition;
   townMedianPrice: number;
+  latitude: number;
+  longitude: number;
   primarySchoolsNearby: NearbySchool[];
   amenities: NearbyAmenity[];
   images: string[];

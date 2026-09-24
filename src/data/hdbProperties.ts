@@ -12,21 +12,23 @@ export interface TownBenchmark {
   popularMrt: string;
   activeListingsCount: number;
   highlight: string;
+  latitude: number;
+  longitude: number;
 }
 
 export const TOWN_BENCHMARKS: TownBenchmark[] = [
-  { town: 'Bishan', region: 'Central', medianPrice4Room: 820000, medianPsf: 825, popularMrt: 'Bishan MRT (NS17/CC15)', activeListingsCount: 42, highlight: 'Top schools, Junction 8, dual-line interchange' },
-  { town: 'Queenstown', region: 'Central', medianPrice4Room: 890000, medianPsf: 910, popularMrt: 'Queenstown MRT (EW19)', activeListingsCount: 38, highlight: 'City fringe, Dawson architectural precinct, high lease' },
-  { town: 'Tampines', region: 'East', medianPrice4Room: 640000, medianPsf: 610, popularMrt: 'Tampines MRT (EW2/DT32)', activeListingsCount: 65, highlight: 'East hub, 3 major shopping malls, Tampines Hub' },
-  { town: 'Punggol', region: 'North-East', medianPrice4Room: 610000, medianPsf: 590, popularMrt: 'Punggol MRT (NE17/CP4)', activeListingsCount: 74, highlight: 'Waterfront living, Digital District, young modern flats' },
-  { town: 'Toa Payoh', region: 'Central', medianPrice4Room: 780000, medianPsf: 790, popularMrt: 'Toa Payoh MRT (NS19)', activeListingsCount: 35, highlight: 'Mature estate charm, 15 mins to Orchard, rich food heritage' },
-  { town: 'Bukit Merah', region: 'Central', medianPrice4Room: 850000, medianPsf: 880, popularMrt: 'Tiong Bahru MRT (EW17)', activeListingsCount: 29, highlight: 'Pinnacle & Tiong Bahru cafes, ultra central location' },
-  { town: 'Clementi', region: 'West', medianPrice4Room: 760000, medianPsf: 770, popularMrt: 'Clementi MRT (EW23)', activeListingsCount: 31, highlight: 'Tertiary education belt (NUS/SP/NP), direct EW line' },
-  { town: 'Bedok', region: 'East', medianPrice4Room: 590000, medianPsf: 580, popularMrt: 'Bedok MRT (EW5)', activeListingsCount: 52, highlight: 'East coast lifestyle, hawker haven, Bedok Reservoir' },
-  { town: 'Woodlands', region: 'North', medianPrice4Room: 510000, medianPsf: 490, popularMrt: 'Woodlands MRT (NS9/TE2)', activeListingsCount: 58, highlight: 'Regional center, RTS Link growth, spacious flat layouts' },
-  { town: 'Kallang/Whampoa', region: 'Central', medianPrice4Room: 810000, medianPsf: 830, popularMrt: 'Kallang MRT (EW10)', activeListingsCount: 26, highlight: 'Riverfront views, near Bugis & CBD, Sports Hub' },
-  { town: 'Jurong East', region: 'West', medianPrice4Room: 620000, medianPsf: 605, popularMrt: 'Jurong East MRT (NS1/EW24)', activeListingsCount: 44, highlight: 'Jurong Lake District, high speed rail vision, 4 mega malls' },
-  { town: 'Sengkang', region: 'North-East', medianPrice4Room: 585000, medianPsf: 575, popularMrt: 'Sengkang MRT (NE16)', activeListingsCount: 68, highlight: 'Comprehensive LRT network, riverside park connectors' },
+  { town: 'Bishan', region: 'Central', medianPrice4Room: 820000, medianPsf: 825, popularMrt: 'Bishan MRT (NS17/CC15)', activeListingsCount: 42, highlight: 'Top schools, Junction 8, dual-line interchange', latitude: 1.3526, longitude: 103.8352 },
+  { town: 'Queenstown', region: 'Central', medianPrice4Room: 890000, medianPsf: 910, popularMrt: 'Queenstown MRT (EW19)', activeListingsCount: 38, highlight: 'City fringe, Dawson architectural precinct, high lease', latitude: 1.2942, longitude: 103.8060 },
+  { town: 'Tampines', region: 'East', medianPrice4Room: 640000, medianPsf: 610, popularMrt: 'Tampines MRT (EW2/DT32)', activeListingsCount: 65, highlight: 'East hub, 3 major shopping malls, Tampines Hub', latitude: 1.3533, longitude: 103.9452 },
+  { town: 'Punggol', region: 'North-East', medianPrice4Room: 610000, medianPsf: 590, popularMrt: 'Punggol MRT (NE17/CP4)', activeListingsCount: 74, highlight: 'Waterfront living, Digital District, young modern flats', latitude: 1.4054, longitude: 103.9022 },
+  { town: 'Toa Payoh', region: 'Central', medianPrice4Room: 780000, medianPsf: 790, popularMrt: 'Toa Payoh MRT (NS19)', activeListingsCount: 35, highlight: 'Mature estate charm, 15 mins to Orchard, rich food heritage', latitude: 1.3343, longitude: 103.8563 },
+  { town: 'Bukit Merah', region: 'Central', medianPrice4Room: 850000, medianPsf: 880, popularMrt: 'Tiong Bahru MRT (EW17)', activeListingsCount: 29, highlight: 'Pinnacle & Tiong Bahru cafes, ultra central location', latitude: 1.2819, longitude: 103.8239 },
+  { town: 'Clementi', region: 'West', medianPrice4Room: 760000, medianPsf: 770, popularMrt: 'Clementi MRT (EW23)', activeListingsCount: 31, highlight: 'Tertiary education belt (NUS/SP/NP), direct EW line', latitude: 1.3162, longitude: 103.7649 },
+  { town: 'Bedok', region: 'East', medianPrice4Room: 590000, medianPsf: 580, popularMrt: 'Bedok MRT (EW5)', activeListingsCount: 52, highlight: 'East coast lifestyle, hawker haven, Bedok Reservoir', latitude: 1.3236, longitude: 103.9273 },
+  { town: 'Woodlands', region: 'North', medianPrice4Room: 510000, medianPsf: 490, popularMrt: 'Woodlands MRT (NS9/TE2)', activeListingsCount: 58, highlight: 'Regional center, RTS Link growth, spacious flat layouts', latitude: 1.4382, longitude: 103.7891 },
+  { town: 'Kallang/Whampoa', region: 'Central', medianPrice4Room: 810000, medianPsf: 830, popularMrt: 'Kallang MRT (EW10)', activeListingsCount: 26, highlight: 'Riverfront views, near Bugis & CBD, Sports Hub', latitude: 1.3100, longitude: 103.8651 },
+  { town: 'Jurong East', region: 'West', medianPrice4Room: 620000, medianPsf: 605, popularMrt: 'Jurong East MRT (NS1/EW24)', activeListingsCount: 44, highlight: 'Jurong Lake District, high speed rail vision, 4 mega malls', latitude: 1.3329, longitude: 103.7436 },
+  { town: 'Sengkang', region: 'North-East', medianPrice4Room: 585000, medianPsf: 575, popularMrt: 'Sengkang MRT (NE16)', activeListingsCount: 68, highlight: 'Comprehensive LRT network, riverside park connectors', latitude: 1.3868, longitude: 103.8914 },
 ];
 
 export const HDB_PROPERTIES: HDBProperty[] = [
@@ -59,6 +61,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Fully Renovated',
     townMedianPrice: 890000,
+    latitude: 1.3582,
+    longitude: 103.8516,
     primarySchoolsNearby: [
       { name: 'Catholic High School (Primary)', distanceKm: 0.45, popularRanking: true },
       { name: 'Townsville Primary School', distanceKm: 0.82 },
@@ -116,6 +120,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Fully Renovated',
     townMedianPrice: 940000,
+    latitude: 1.2965,
+    longitude: 103.8093,
     primarySchoolsNearby: [
       { name: 'Queenstown Primary School', distanceKm: 0.52 },
       { name: 'New Town Primary School', distanceKm: 0.95 },
@@ -173,6 +179,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Well-Kept',
     townMedianPrice: 795000,
+    latitude: 1.3589,
+    longitude: 103.9392,
     primarySchoolsNearby: [
       { name: 'Poi Ching School', distanceKm: 0.65, popularRanking: true },
       { name: 'St. Hilda’s Primary School', distanceKm: 1.2, popularRanking: true },
@@ -230,6 +238,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Fully Renovated',
     townMedianPrice: 660000,
+    latitude: 1.4053,
+    longitude: 103.9068,
     primarySchoolsNearby: [
       { name: 'Punggol View Primary School', distanceKm: 0.35 },
       { name: 'Oasis Primary School', distanceKm: 0.68 },
@@ -287,6 +297,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Fully Renovated',
     townMedianPrice: 515000,
+    latitude: 1.3344,
+    longitude: 103.8504,
     primarySchoolsNearby: [
       { name: 'CHIJ Primary (Toa Payoh)', distanceKm: 0.42, popularRanking: true },
       { name: 'Kheng Cheng School', distanceKm: 0.75 },
@@ -344,6 +356,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Fully Renovated',
     townMedianPrice: 1220000,
+    latitude: 1.2778,
+    longitude: 103.8402,
     primarySchoolsNearby: [
       { name: 'Cantonment Primary School', distanceKm: 0.15, popularRanking: true },
       { name: 'Radin Mas Primary School', distanceKm: 1.6 },
@@ -401,6 +415,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Fully Renovated',
     townMedianPrice: 860000,
+    latitude: 1.3155,
+    longitude: 103.7652,
     primarySchoolsNearby: [
       { name: 'Nan Hua Primary School', distanceKm: 0.48, popularRanking: true },
       { name: 'Clementi Primary School', distanceKm: 0.35 },
@@ -458,6 +474,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Fully Renovated',
     townMedianPrice: 990000,
+    latitude: 1.3362,
+    longitude: 103.9248,
     primarySchoolsNearby: [
       { name: 'Yu Neng Primary School', distanceKm: 0.55, popularRanking: true },
       { name: 'Red Swastika School', distanceKm: 0.78, popularRanking: true },
@@ -515,6 +533,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Well-Kept',
     townMedianPrice: 720000,
+    latitude: 1.4297,
+    longitude: 103.7915,
     primarySchoolsNearby: [
       { name: 'Innova Primary School', distanceKm: 0.38 },
       { name: 'Woodgrove Primary School', distanceKm: 0.62 },
@@ -572,6 +592,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Fully Renovated',
     townMedianPrice: 645000,
+    latitude: 1.3148,
+    longitude: 103.8708,
     primarySchoolsNearby: [
       { name: 'Bendemeer Primary School', distanceKm: 0.88 },
       { name: 'Hong Wen School', distanceKm: 1.4 },
@@ -629,6 +651,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Well-Kept',
     townMedianPrice: 690000,
+    latitude: 1.3418,
+    longitude: 103.7428,
     primarySchoolsNearby: [
       { name: 'Yuhua Primary School', distanceKm: 0.42 },
       { name: 'Fuhua Primary School', distanceKm: 0.85 },
@@ -686,6 +710,8 @@ export const HDB_PROPERTIES: HDBProperty[] = [
     noWestSun: true,
     renovationCondition: 'Fully Renovated',
     townMedianPrice: 670000,
+    latitude: 1.3888,
+    longitude: 103.9052,
     primarySchoolsNearby: [
       { name: 'Rivervale Primary School', distanceKm: 0.28 },
       { name: 'Nan Chiau Primary School', distanceKm: 1.15, popularRanking: true },

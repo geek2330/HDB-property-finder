@@ -1,133 +1,159 @@
 import React, { useState } from 'react';
-import { MapPin, ArrowRight, Home } from 'lucide-react';
-import { TOWN_BENCHMARKS, TownBenchmark } from '../data/hdbProperties';
-import { SingaporeRegion } from '../types/property';
+import { MapPin, ArrowRight, Home, Map as MapIcon, Globe } from 'lucide-react';
+import { TOWN_BENCHMARKS, TownBenchmark, HDB_PROPERTIES } from '../data/hdbProperties';
+import { SingaporeRegion, HDBProperty, ScoredProperty } from '../types/property';
+import { OneMapInteractive } from './OneMapInteractive';
 
 interface SingaporeTownMapProps {
   onSelectTown: (town: string) => void;
   onSelectRegion: (region: SingaporeRegion) => void;
+  onSelectProperty?: (property: ScoredProperty | HDBProperty) => void;
 }
 
 export const SingaporeTownMap: React.FC<SingaporeTownMapProps> = ({
   onSelectTown,
   onSelectRegion,
+  onSelectProperty,
 }) => {
   const [selectedTown, setSelectedTown] = useState<TownBenchmark>(TOWN_BENCHMARKS[0]);
   const [activeRegionFilter, setActiveRegionFilter] = useState<SingaporeRegion | 'All'>('All');
+  const [mapMode, setMapMode] = useState<'onemap' | 'schematic'>('onemap');
 
   const filteredTowns = activeRegionFilter === 'All'
     ? TOWN_BENCHMARKS
     : TOWN_BENCHMARKS.filter((t) => t.region === activeRegionFilter);
 
+  const filteredProperties = activeRegionFilter === 'All'
+    ? HDB_PROPERTIES
+    : HDB_PROPERTIES.filter((p) => p.region === activeRegionFilter);
+
   return (
     <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold tracking-wider text-rose-600 uppercase">
-            Singapore HDB Geospatial Overview
-          </p>
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-0.5">
-            Explore Estates & Resale Price Benchmarks
+          <div className="flex items-center gap-2 text-rose-600 mb-1">
+            <Globe className="w-4 h-4" />
+            <span className="text-xs font-semibold uppercase tracking-wider">
+              SLA OneMap Official Singapore Basemap
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+            Interactive Estate & Resale Map Explorer
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 mt-1">
-            Compare median prices, MRT connectivity, and active listings across Singapore's key residential towns.
+            Browse available HDB listings and town price benchmarks directly on official Singapore Land Authority (SLA) OneMap tiles.
           </p>
         </div>
 
-        {/* Region Filter Buttons */}
-        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg self-start sm:self-auto overflow-x-auto max-w-full">
-          {(['All', 'Central', 'East', 'North', 'North-East', 'West'] as const).map((reg) => (
+        {/* Controls: Region Filter & Map View Toggle */}
+        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+          {/* Map Mode Selector */}
+          <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs">
             <button
-              key={reg}
-              onClick={() => setActiveRegionFilter(reg)}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors cursor-pointer whitespace-nowrap ${
-                activeRegionFilter === reg
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+              onClick={() => setMapMode('onemap')}
+              className={`px-3 py-1 font-semibold rounded-md transition-colors cursor-pointer flex items-center gap-1.5 ${
+                mapMode === 'onemap' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              {reg}
+              <MapIcon className="w-3.5 h-3.5" />
+              <span>SLA OneMap</span>
             </button>
-          ))}
+            <button
+              onClick={() => setMapMode('schematic')}
+              className={`px-3 py-1 font-semibold rounded-md transition-colors cursor-pointer flex items-center gap-1.5 ${
+                mapMode === 'schematic' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span>Town Grid</span>
+            </button>
+          </div>
+
+          {/* Region Filter Buttons */}
+          <div className="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg overflow-x-auto">
+            {(['All', 'Central', 'East', 'North', 'North-East', 'West'] as const).map((reg) => (
+              <button
+                key={reg}
+                onClick={() => setActiveRegionFilter(reg)}
+                className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-colors cursor-pointer whitespace-nowrap ${
+                  activeRegionFilter === reg
+                    ? 'bg-white text-slate-900 shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                {reg}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       <div className="grid lg:grid-cols-12 gap-6 items-start">
-        {/* Visual Map Representation */}
-        <div className="lg:col-span-8 bg-slate-50 border border-slate-200 rounded-xl p-6 relative overflow-hidden min-h-[380px] flex flex-col justify-between">
-          <div className="flex items-center justify-between text-xs text-slate-500 mb-4">
-            <span className="font-semibold text-slate-700">Singapore Islandwide Interactive Map</span>
-            <span className="flex items-center gap-1.5 text-[11px]">
-              <span className="w-2 h-2 rounded-full bg-rose-500" />
-              <span>Click any town to inspect price benchmarks</span>
-            </span>
-          </div>
+        {/* Map Column */}
+        <div className="lg:col-span-8">
+          {mapMode === 'onemap' ? (
+            <OneMapInteractive
+              properties={filteredProperties}
+              onSelectProperty={onSelectProperty}
+              height="480px"
+              initialCenter={[selectedTown.latitude, selectedTown.longitude]}
+              initialZoom={12}
+            />
+          ) : (
+            /* Schematic Regional View */
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 relative overflow-hidden min-h-[480px] flex flex-col justify-between">
+              <div className="flex items-center justify-between text-xs text-slate-500 mb-4">
+                <span className="font-semibold text-slate-700">Singapore Islandwide Regional Overview</span>
+                <span className="text-[11px]">Click any town to inspect price benchmarks</span>
+              </div>
 
-          {/* SVG Map of Singapore simplified regional polygons with town markers */}
-          <div className="relative w-full aspect-[16/9] flex items-center justify-center">
-            <svg
-              viewBox="0 0 800 450"
-              className="w-full h-full drop-shadow-xs"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* Singapore Island Outline simplified aesthetic */}
-              <path
-                d="M 80 200 C 100 160 160 140 240 130 C 320 120 400 110 480 120 C 560 130 640 140 710 170 C 740 185 750 210 730 230 C 700 260 620 280 540 290 C 460 300 380 320 300 315 C 220 310 140 290 90 260 C 70 245 70 220 80 200 Z"
-                className="fill-slate-200/80 stroke-slate-300 stroke-2"
-              />
-              {/* Sentosa island */}
-              <ellipse cx="360" cy="350" rx="45" ry="12" className="fill-slate-200/80 stroke-slate-300 stroke-1" />
-              {/* Pulau Ubin & Tekong */}
-              <ellipse cx="640" cy="110" rx="35" ry="14" className="fill-slate-200/60 stroke-slate-300 stroke-1" />
-              <ellipse cx="720" cy="115" rx="30" ry="16" className="fill-slate-200/60 stroke-slate-300 stroke-1" />
+              {/* Simplified SVG Map */}
+              <div className="relative w-full aspect-[16/9] flex items-center justify-center">
+                <svg
+                  viewBox="0 0 800 450"
+                  className="w-full h-full drop-shadow-xs"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M 80 200 C 100 160 160 140 240 130 C 320 120 400 110 480 120 C 560 130 640 140 710 170 C 740 185 750 210 730 230 C 700 260 620 280 540 290 C 460 300 380 320 300 315 C 220 310 140 290 90 260 C 70 245 70 220 80 200 Z"
+                    className="fill-slate-200/80 stroke-slate-300 stroke-2"
+                  />
+                  <ellipse cx="360" cy="350" rx="45" ry="12" className="fill-slate-200/80 stroke-slate-300 stroke-1" />
+                  <ellipse cx="640" cy="110" rx="35" ry="14" className="fill-slate-200/60 stroke-slate-300 stroke-1" />
+                  <ellipse cx="720" cy="115" rx="30" ry="16" className="fill-slate-200/60 stroke-slate-300 stroke-1" />
+                  <path d="M 440 220 Q 420 260 410 300" stroke="#94a3b8" strokeWidth="2" strokeDasharray="3 3" />
+                </svg>
 
-              {/* Waterway / Kallang Basin accent line */}
-              <path d="M 440 220 Q 420 260 410 300" stroke="#94a3b8" strokeWidth="2" strokeDasharray="3 3" />
-            </svg>
+                <div className="absolute inset-0 pointer-events-none">
+                  {filteredTowns.map((pin) => (
+                    <button
+                      key={pin.town}
+                      type="button"
+                      onClick={() => setSelectedTown(pin)}
+                      className={`absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 transition-all cursor-pointer flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold border ${
+                        selectedTown.town === pin.town
+                          ? 'bg-rose-600 text-white border-rose-600 shadow-md scale-110 z-20'
+                          : 'bg-white/95 text-slate-800 border-slate-300 hover:border-slate-500 shadow-xs hover:scale-105 z-10'
+                      }`}
+                      style={{
+                        left: `${((pin.longitude - 103.65) / (104.0 - 103.65)) * 100}%`,
+                        top: `${(1 - (pin.latitude - 1.25) / (1.47 - 1.25)) * 100}%`,
+                      }}
+                    >
+                      <MapPin className={`w-3 h-3 ${selectedTown.town === pin.town ? 'text-white' : 'text-rose-600'}`} />
+                      <span>{pin.town}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-            {/* Interactive Town Marker Buttons positioned roughly on the map */}
-            <div className="absolute inset-0 pointer-events-none">
-              {[
-                { town: 'Woodlands', x: '42%', y: '26%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Woodlands') },
-                { town: 'Punggol', x: '63%', y: '30%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Punggol') },
-                { town: 'Sengkang', x: '60%', y: '40%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Sengkang') },
-                { town: 'Bishan', x: '46%', y: '44%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Bishan') },
-                { town: 'Toa Payoh', x: '48%', y: '52%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Toa Payoh') },
-                { town: 'Tampines', x: '72%', y: '46%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Tampines') },
-                { town: 'Bedok', x: '68%', y: '56%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Bedok') },
-                { town: 'Kallang/Whampoa', x: '53%', y: '60%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Kallang/Whampoa') },
-                { town: 'Queenstown', x: '38%', y: '66%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Queenstown') },
-                { town: 'Bukit Merah', x: '44%', y: '70%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Bukit Merah') },
-                { town: 'Clementi', x: '30%', y: '56%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Clementi') },
-                { town: 'Jurong East', x: '24%', y: '50%', benchmark: TOWN_BENCHMARKS.find(b => b.town === 'Jurong East') },
-              ].map((pin) => {
-                if (!pin.benchmark) return null;
-                const isSelected = selectedTown.town === pin.town;
-                return (
-                  <button
-                    key={pin.town}
-                    type="button"
-                    onClick={() => setSelectedTown(pin.benchmark!)}
-                    style={{ left: pin.x, top: pin.y }}
-                    className={`absolute pointer-events-auto transform -translate-x-1/2 -translate-y-1/2 transition-all cursor-pointer flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold border ${
-                      isSelected
-                        ? 'bg-rose-600 text-white border-rose-600 shadow-md scale-110 z-20'
-                        : 'bg-white/95 text-slate-800 border-slate-300 hover:border-slate-500 shadow-xs hover:scale-105 z-10'
-                    }`}
-                  >
-                    <MapPin className={`w-3 h-3 ${isSelected ? 'text-white' : 'text-rose-600'}`} />
-                    <span>{pin.town}</span>
-                  </button>
-                );
-              })}
+              <div className="mt-4 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+                <span>Integrated with Singapore SLA OneMap geospatial standards</span>
+                <span>2026 Resale Transactions</span>
+              </div>
             </div>
-          </div>
-
-          <div className="mt-4 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-            <span>MRT & Expressways connected</span>
-            <span>Data updated for 2026 Resale Transactions</span>
-          </div>
+          )}
         </div>
 
         {/* Selected Town Detail Panel */}
@@ -178,7 +204,7 @@ export const SingaporeTownMap: React.FC<SingaporeTownMapProps> = ({
             </div>
           </div>
 
-          {/* Action to Filter by this Town */}
+          {/* Actions */}
           <div className="pt-2 space-y-2">
             <button
               onClick={() => onSelectTown(selectedTown.town)}
@@ -197,7 +223,7 @@ export const SingaporeTownMap: React.FC<SingaporeTownMapProps> = ({
         </div>
       </div>
 
-      {/* Grid of all towns benchmark table */}
+      {/* Grid of all towns benchmark reference */}
       <div className="pt-4 border-t border-slate-200">
         <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">
           Town Resale Reference Matrix

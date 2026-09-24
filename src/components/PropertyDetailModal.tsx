@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { 
   X, Bookmark, Scale, Train, School, ShoppingBag, 
   TreePine, CheckCircle2, 
-  Compass, ShieldCheck, Calculator, ArrowRight, Share2, CalendarCheck
+  Compass, ShieldCheck, Calculator, ArrowRight, Share2, CalendarCheck, MapPin
 } from 'lucide-react';
 import { ScoredProperty } from '../types/property';
 import { calculateHDBFinances } from '../utils/calculator';
+import { OneMapInteractive } from './OneMapInteractive';
 
 interface PropertyDetailModalProps {
   property: ScoredProperty | null;
@@ -451,6 +452,29 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
           {/* TAB 3: AMENITIES & SCHOOLS */}
           {activeTab === 'amenities' && (
             <div className="space-y-6">
+              {/* SLA OneMap Block Locator */}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-rose-600" />
+                    <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                      SLA OneMap Block Geolocation · S({property.postalCode})
+                    </h3>
+                  </div>
+                  <span className="text-[11px] text-slate-500">
+                    Official Singapore Cadastral Basemap
+                  </span>
+                </div>
+                <OneMapInteractive
+                  properties={[property]}
+                  selectedPropertyId={property.id}
+                  height="260px"
+                  initialCenter={[property.latitude, property.longitude]}
+                  initialZoom={16}
+                  showSearch={false}
+                />
+              </div>
+
               {/* Primary Schools within 1km Priority */}
               <div>
                 <div className="flex items-center gap-2 mb-3">
